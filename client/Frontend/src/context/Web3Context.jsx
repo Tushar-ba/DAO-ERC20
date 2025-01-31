@@ -28,6 +28,8 @@ export const Web3Provider = ({ children }) => {
         setSigner(signer)
         setContract(contract)
         setIsConnected(true)
+        console.log("Contract ABI:", CONTRACT_ABI);
+        console.log("Contract instance:", contract);
       } catch (error) {
         console.error("Failed to connect wallet:", error)
       }
@@ -42,8 +44,6 @@ export const Web3Provider = ({ children }) => {
     setSigner(null)
     setContract(null)
     setIsConnected(false)
-    console.log("Contract ABI:", CONTRACT_ABI);
-    console.log("Contract instance:", contract);
   }, [])
 
   useEffect(() => {
