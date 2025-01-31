@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Web3Provider } from "./context/Web3Context"
+import ConnectButton from "./components/ConnectButton"
+import ProposerButton from "./components/ProposerButton"
+import VoterButton from "./components/VoterButton"
+import TotalProposers from "./components/TotalProposers"
+import TotalProposal from "./components/TotalProposal"
+import RecentProposal from "./components/RecentProposal"
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Web3Provider>
+      <div className="min-h-screen bg-[#0C0C1D] p-6">
+        <div className="mx-auto max-w-7xl">
+          {/* Header */}
+          <div className="mb-16 flex items-center justify-between">
+            <h1 className="text-5xl font-bold text-white">DAO</h1>
+            <ConnectButton />
+          </div>
+
+          {/* Stats Grid */}
+          <div className="mb-16 grid gap-8 md:grid-cols-3">
+            <div className="min-h-[200px]">
+              <TotalProposal />
+            </div>
+            <div className="min-h-[200px]">
+              <RecentProposal />
+            </div>
+            <div className="min-h-[200px]">
+              <TotalProposers />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid gap-8 md:grid-cols-2">
+            <ProposerButton />
+            <VoterButton />
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Web3Provider>
   )
 }
 
-export default App

@@ -1,0 +1,90 @@
+import { createContext, useState, useEffect, useCallback } from "react"
+import { ethers } from "ethers"
+import { ABI } from "./ABI.js"
+
+const CONTRACT_ABI = ABI
+const CONTRACT_ADDRESS = "0xa9d663860157B2bACB6849aed2f4b71329410D10"
+
+export const Web3Context = createContext()
+
+export const Web3Provider = ({ children }) => {
+  const [account, setAccount] = useState(null)
+  const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
+  const [contract, setContract] = useState(null)
+  const [isConnected, setIsConnected] = useState(false)
+
+  const connectWallet = useCallback(async () => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" })
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        const address = await signer.getAddress()
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider)
+
+        setAccount(address)
+        setProvider(provider)
+        setSigner(signer)
+        setContract(contract)
+        setIsConnected(true)
+      } catch (error) {
+        console.error("Failed to connect wallet:", error)
+      }
+    } else {
+      console.log("Please install MetaMask!")
+    }
+  }, [])
+
+  const disconnectWallet = useCallback(() => {
+    setAccount(null)
+    setProvider(null)
+    setSigner(null)
+    setContract(null)
+    setIsConnected(false)
+    console.log("Contract ABI:", CONTRACT_ABI);
+    console.log("Contract instance:", contract);
+  }, [])
+
+  useEffect(() => {
+    if (typeof window.ethereum !== "undefined") {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        if (accounts.length > 0) {
+          connectWallet()
+        } else {
+          disconnectWallet()
+        }
+      })
+
+      window.ethereum.on("chainChanged", () => {
+        window.location.reload()
+      })
+    }
+
+    return () => {
+      if (typeof window.ethereum !== "undefined") {
+        window.ethereum.removeAllListeners("accountsChanged")
+        window.ethereum.removeAllListeners("chainChanged")
+      }
+    }
+  }, [connectWallet, disconnectWallet])
+
+  return (
+    <Web3Context.Provider
+      value={{
+        account,
+        provider,
+        signer,
+        contract,
+        isConnected,
+        connectWallet,
+        disconnectWallet,
+        CONTRACT_ABI,
+        CONTRACT_ADDRESS,
+      }}
+    >
+      {children}
+    </Web3Context.Provider>
+  )
+}
+
