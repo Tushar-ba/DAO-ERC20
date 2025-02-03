@@ -9,6 +9,26 @@ export default function ProposerButton() {
   const [showMintToken, setShowMintToken] = useState(false)
   const { createContractSigner, contract, account } = useContext(Web3Context)
 
+  const checkProposerStatus = useCallback(async () => {
+    try {
+      if (!contract || !account) {
+        console.log("Contract or account not available")
+        setProposer(false)
+        return
+      }
+
+      const isProposer = await contract.hasRole(
+        "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        account,
+      )
+      console.log("Current proposer status for account", account, ":", isProposer)
+      setProposer(isProposer)
+    } catch (error) {
+      console.error("Error checking proposer status:", error)
+      setProposer(false)
+    }
+  }, [contract, account])
+
   const handleClick = async () => {
     try {
       console.log("clicked")
@@ -24,7 +44,8 @@ export default function ProposerButton() {
       })
       await tx.wait()
       console.log("Transaction successful:", tx)
-      setShowMintToken(true) // Show mint token UI after successful transaction
+      await checkProposerStatus()
+      setShowMintToken(true)
     } catch (error) {
       console.error("Transaction failed:", error)
     } finally {
@@ -32,27 +53,11 @@ export default function ProposerButton() {
     }
   }
 
-  const disableIfAlreadyProposer = useCallback(async () => {
-    try {
-      if (!contract) {
-        console.error("Contract not available")
-        return
-      }
-      const isProposer = await contract.hasRole(
-        "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        account,
-      )
-      console.log(isProposer)
-      setProposer(isProposer)
-      return isProposer
-    } catch (error) {
-      console.log(error)
-    }
-  }, [contract, account])
-
+  // Effect to check proposer status whenever account changes
   useEffect(() => {
-    disableIfAlreadyProposer()
-  }, [disableIfAlreadyProposer])
+    console.log("Account changed to:", account)
+    checkProposerStatus()
+  }, [account, checkProposerStatus])
 
   return (
     <div className="flex flex-col gap-4">
@@ -63,10 +68,13 @@ export default function ProposerButton() {
         onClick={handleClick}
         disabled={isLoading || proposer}
       >
-        {isLoading ? "Processing..." : proposer ? "You are already a proposer" : "Click here to become a Proposer"}
+        {isLoading 
+          ? "Processing..." 
+          : proposer 
+          ? `You are already a proposer (${account?.slice(0, 6)}...)` 
+          : "Click here to become a Proposer"}
       </button>
 
-      {/* Only show MintProposerToken after successful transaction */}
       {showMintToken && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
           <div className="bg-[#0C0C1D] p-8 rounded-xl relative max-w-md w-full mx-4">
@@ -91,4 +99,3 @@ export default function ProposerButton() {
     </div>
   )
 }
-

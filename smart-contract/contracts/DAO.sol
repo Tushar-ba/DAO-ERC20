@@ -132,6 +132,7 @@ contract DAO is Ownable,AccessControl,ReentrancyGuard{
             revert noRole(msg.sender);
         }
         (bool success,) = msg.sender.call{value:STAKE_AMOUNT}("");
+        _revokeRole(PROPOSER_ROLE,msg.sender);
         require(success,"Transaction failed");
     }
 }

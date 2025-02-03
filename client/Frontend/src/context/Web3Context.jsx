@@ -3,7 +3,7 @@ import { ethers } from "ethers"
 import { ABI } from "./ABI.js"
 
 const CONTRACT_ABI = ABI
-const CONTRACT_ADDRESS = "0xa9d663860157B2bACB6849aed2f4b71329410D10"
+const CONTRACT_ADDRESS = "0x23D4e264eB314B19f310FC2e9bdFDa10de68F43a"
 
 export const Web3Context = createContext()
 

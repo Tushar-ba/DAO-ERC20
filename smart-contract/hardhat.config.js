@@ -34,9 +34,9 @@ sourcify: {
   enabled: true
 }
 
-// DAO Contract address: 0xa9d663860157B2bACB6849aed2f4b71329410D10
-// Voter Contract address: 0xd1D03955dCAD963078f4FDcB31185348d93f8326
-// Proposal Contract address: 0x033EABe381dCD56e81C273bD9bb25f8B8913BD52
+// DAO Contract address: 0x23D4e264eB314B19f310FC2e9bdFDa10de68F43a
+// Voter Contract address: 0x2891Da924653BEdd078D867AD7067491E5FE71d1
+// Proposal Contract address: 0xf468e3E33bb691BBFD5821732cF022350940B342
 // Setting the Token Accounts
 // Setting successfull 😊😊😊
 
