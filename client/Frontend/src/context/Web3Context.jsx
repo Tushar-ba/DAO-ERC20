@@ -13,6 +13,7 @@ export const Web3Provider = ({ children }) => {
   const [signer, setSigner] = useState(null)
   const [contract, setContract] = useState(null)
   const [isConnected, setIsConnected] = useState(false)
+  const [isContractSigner, setIsContractSigner] = useState(false);
 
   const connectWallet = useCallback(async () => {
     if (typeof window.ethereum !== "undefined") {
@@ -35,6 +36,21 @@ export const Web3Provider = ({ children }) => {
       }
     } else {
       console.log("Please install MetaMask!")
+    }
+  }, [])
+
+  const createContractSigner = useCallback( async () =>{
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" })
+        const provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        const contractSigner = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer)
+        setProvider(provider);
+        setSigner(signer);
+        setIsContractSigner(contractSigner);
+        return contractSigner;
+    } catch (error) {
+      console.log(error);
     }
   }, [])
 
@@ -81,6 +97,7 @@ export const Web3Provider = ({ children }) => {
         disconnectWallet,
         CONTRACT_ABI,
         CONTRACT_ADDRESS,
+        createContractSigner
       }}
     >
       {children}
