@@ -1,2 +1,40 @@
 @import "tailwindcss";
 
+.border-3 {
+    border-width: 3px;
+  }
+  
+  .time-picker-custom .react-time-picker__wrapper {
+    background-color: #1fad6b;
+    border: 3px solid #f7fdfc;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+  }
+  
+  .time-picker-custom .react-time-picker__inputGroup__input {
+    color: #0c0c1d;
+    font-size: 1.125rem;
+  }
+  
+  .time-picker-custom .react-time-picker__button {
+    stroke: #0c0c1d;
+  }
+  
+  .time-picker-custom .react-time-picker__clock {
+    background-color: #1fad6b;
+    border: 3px solid #f7fdfc;
+  }
+  
+  .time-picker-custom .react-clock__face {
+    border: 3px solid #f7fdfc;
+  }
+  
+  .time-picker-custom .react-clock__hand__body {
+    background-color: #0c0c1d;
+  }
+  
+  .time-picker-custom .react-clock__mark__body {
+    background-color: #0c0c1d;
+  }
+  
+  

@@ -38,7 +38,7 @@ contract DAO is Ownable,AccessControl,ReentrancyGuard{
     }
 
     mapping(uint256 => Proposal ) public proposal;
-    mapping(address => Voter) public voter;
+    mapping(uint256 => mapping(address => Voter)) public voter;
 
     error noRole(address _role);
     error insufficientStake(uint256 _amount);
@@ -113,7 +113,7 @@ contract DAO is Ownable,AccessControl,ReentrancyGuard{
         if( block.timestamp >= newProposal.duration){
             newProposal.isActive = false;
         }
-        Voter storage newVote = voter[msg.sender];
+        Voter storage newVote = voter[_proposalId][msg.sender];
         require(!newVote.hasVoted,"Cannot vote again");
         require(bytes(newProposal.name).length != 0,"Proposal Does not exist");
         require(newProposal.isActive,"Proposal Expired");

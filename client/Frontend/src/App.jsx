@@ -5,6 +5,8 @@ import VoterButton from "./components/VoterButton"
 import TotalProposers from "./components/TotalProposers"
 import TotalProposal from "./components/TotalProposal"
 import RecentProposal from "./components/RecentProposal"
+import CreateProposal from "./components/CreateProposal"
+import ViewProposals from "./components/ViewProposals"
 
 export default function App() {
   return (
@@ -31,9 +33,17 @@ export default function App() {
           </div>
 
           {/* Action Buttons */}
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 mb-8">
             <ProposerButton />
             <VoterButton />
+          </div>
+
+          {/* Create Proposal */}
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="md:col-span-2">
+              <CreateProposal />
+            </div>
+            <ViewProposals/>
           </div>
         </div>
       </div>
