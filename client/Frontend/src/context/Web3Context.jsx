@@ -35,7 +35,7 @@ export const Web3Provider = ({ children }) => {
         console.error("Failed to connect wallet:", error)
       }
     } else {
-      console.log("Please install MetaMask!")
+      window.location.href = "https://metamask.app.link/dapp/" + window.location.href
     }
   }, [])
 
