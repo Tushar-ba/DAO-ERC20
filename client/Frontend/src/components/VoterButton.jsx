@@ -2,6 +2,7 @@ import { useContext, useState, useCallback, useEffect } from "react"
 import { Web3Context } from "../context/Web3Context"
 import { ethers } from "ethers"
 import MintVoterToken from "./MintVoterToken"
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function ProposerButton() {
   const [isLoading, setIsLoading] = useState(false)
@@ -63,7 +64,14 @@ export default function ProposerButton() {
         onClick={handleClick}
         disabled={isLoading || voter}
       >
-        {isLoading ? "Processing..." : voter ? "You already have the Vote power" : "Click here to get voting rights"}
+        {isLoading ? <BeatLoader
+          color="hsla(185, 0%, 0%, 1)"
+          cssOverride={{}}
+          loading
+          margin={2}
+          size={15}
+          speedMultiplier={1}
+        />: voter ? "You already have the Vote power" : "Click here to get voting rights"}
       </button>
 
       {/* Only show MintProposerToken after successful transaction */}

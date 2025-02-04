@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Web3Context } from "../context/Web3Context";
 import { ethers } from "ethers";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function TotalProposal() {
     const [proposals1, setProposals1] = useState(null);
@@ -29,7 +30,14 @@ export default function TotalProposal() {
         <h2 className="mb-2 text-xl font-bold text-white">Total Proposals</h2>
         <div className="flex flex-1 items-center justify-center">
           {proposals1 === null ? ( 
-            <p className="text-xl text-[#0C0C1D]">Loading...</p>
+            <p className="text-xl text-[#0C0C1D]"><BeatLoader
+            color="hsla(185, 0%, 0%, 1)"
+            cssOverride={{}}
+            loading
+            margin={2}
+            size={15}
+            speedMultiplier={1}
+          /></p>
           ) : (
             <p className="text-6xl font-bold text-[#0C0C1D]">{proposals1}</p>
           )}

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { Web3Context } from "../context/Web3Context"
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function CreateProposal() {
   const { createContractSigner } = useContext(Web3Context);
@@ -125,7 +126,14 @@ export default function CreateProposal() {
                   disabled={isSubmitting}
                   className="rounded-lg bg-[#1FAD6B] px-16 py-3 text-xl font-bold text-[#0C0C1D] transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
                 >
-                  {isSubmitting ? "Creating..." : "Confirm"}
+                  {isSubmitting ? <BeatLoader
+                                  color="hsla(185, 0%, 0%, 1)"
+                                  cssOverride={{}}
+                                  loading
+                                  margin={2}
+                                  size={15}
+                                  speedMultiplier={1}
+                                /> : "Confirm"}
                 </button>
               </div>
             </form>

@@ -1,5 +1,6 @@
 import { useState, useContext } from "react"
 import { Web3Context } from "../context/Web3Context"
+import BeatLoader from "react-spinners/BeatLoader"
 
 const MintVoterToken = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +35,14 @@ const MintVoterToken = ({ onClose }) => {
         }`}
         disabled={isLoading}
       >
-        {isLoading ? "Minting in progress..." : "Mint Token"}
+        {isLoading ? <BeatLoader
+          color="hsla(185, 0%, 0%, 1)"
+          cssOverride={{}}
+          loading
+          margin={2}
+          size={15}
+          speedMultiplier={1}
+        />: "Mint Token"}
       </button>
     </div>
   )

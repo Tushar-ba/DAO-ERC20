@@ -2,6 +2,7 @@ import { useContext, useState, useCallback, useEffect } from "react"
 import { Web3Context } from "../context/Web3Context"
 import { ethers } from "ethers"
 import MintProposerToken from "./MintProposerToken"
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function ProposerButton() {
   const [isLoading, setIsLoading] = useState(false)
@@ -69,7 +70,14 @@ export default function ProposerButton() {
         disabled={isLoading || proposer}
       >
         {isLoading 
-          ? "Processing..." 
+          ? <BeatLoader
+          color="hsla(185, 0%, 0%, 1)"
+          cssOverride={{}}
+          loading
+          margin={2}
+          size={15}
+          speedMultiplier={1}
+        />
           : proposer 
           ? `You are already a proposer (${account?.slice(0, 6)}...)` 
           : "Click here to become a Proposer"}

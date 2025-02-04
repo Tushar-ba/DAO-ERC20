@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react"
 import { X } from "lucide-react"
 import { Web3Context } from "../context/Web3Context"
+import PropagateLoader from "react-spinners/PropagateLoader"
 
 export default function ViewProposals() {
   const { contract, createContractSigner } = useContext(Web3Context);
@@ -28,7 +29,7 @@ export default function ViewProposals() {
       let allProposals = [];
       
       // Iterate from 0 to count-1
-      for(let i = 0; i < proposalCount; i++) {
+      for(let i = 1; i <= proposalCount; i++) {
         try {
           console.log("Fetching proposal:", i);
           const proposal = await contract.proposal(i);
@@ -154,7 +155,7 @@ export default function ViewProposals() {
             <h2 className="mb-8 text-center text-3xl font-bold text-white underline">Proposals List</h2>
 
             {isLoading ? (
-              <div className="text-center text-white">Loading proposals...</div>
+              <div className="text-center items-center justify-center text-white"><PropagateLoader color="#2BD45E" /></div>
             ) : error ? (
               <div className="text-center text-red-500">{error}</div>
             ) : proposals.length === 0 ? (
